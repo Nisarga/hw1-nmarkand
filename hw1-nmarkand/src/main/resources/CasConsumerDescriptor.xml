@@ -19,23 +19,62 @@
       <nameValuePair>
         <name>outputFile</name>
         <value>
-          <string>src/main/resources/data-op.txt</string>
+          <string>src/main/resources/data/output.txt</string>
         </value>
       </nameValuePair>
     </configurationParameterSettings>
-    <typeSystemDescription/>
+    <typeSystemDescription>
+      <types>
+        <typeDescription>
+          <name>SourceDocumentInformation</name>
+          <description/>
+          <supertypeName>uima.tcas.Annotation</supertypeName>
+          <features>
+            <featureDescription>
+              <name>uri</name>
+              <description/>
+              <rangeTypeName>uima.cas.String</rangeTypeName>
+            </featureDescription>
+            <featureDescription>
+              <name>offsetInSource</name>
+              <description/>
+              <rangeTypeName>uima.cas.Integer</rangeTypeName>
+            </featureDescription>
+            <featureDescription>
+              <name>documentSize</name>
+              <description/>
+              <rangeTypeName>uima.cas.Integer</rangeTypeName>
+            </featureDescription>
+            <featureDescription>
+              <name>lastSegment</name>
+              <description/>
+              <rangeTypeName>uima.cas.Boolean</rangeTypeName>
+            </featureDescription>
+          </features>
+        </typeDescription>
+      </types>
+    </typeSystemDescription>
     <typePriorities/>
     <fsIndexCollection/>
     <capabilities>
       <capability>
-        <inputs/>
+        <inputs>
+          <type>SourceDocumentInformation</type>
+          <feature>SourceDocumentInformation:lastSegment</feature>
+          <feature>SourceDocumentInformation:documentSize</feature>
+          <feature>SourceDocumentInformation:offsetInSource</feature>
+          <feature>SourceDocumentInformation:uri</feature>
+          <feature>SourceDocumentInformation:end</feature>
+          <feature>SourceDocumentInformation:begin</feature>
+          <feature>SourceDocumentInformation:sofa</feature>
+        </inputs>
         <outputs/>
         <languagesSupported/>
       </capability>
     </capabilities>
     <operationalProperties>
       <modifiesCas>false</modifiesCas>
-      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
       <outputsNewCASes>false</outputsNewCASes>
     </operationalProperties>
   </processingResourceMetaData>

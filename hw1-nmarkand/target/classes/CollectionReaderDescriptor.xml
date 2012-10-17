@@ -31,7 +31,7 @@
       <nameValuePair>
         <name>InputFile</name>
         <value>
-          <string>src/main/resources/data/sampNis.txt</string>
+          <string>src/main/resources/data/sample.in</string>
         </value>
       </nameValuePair>
     </configurationParameterSettings>

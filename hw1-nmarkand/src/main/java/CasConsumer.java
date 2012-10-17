@@ -25,6 +25,9 @@ import java.util.Iterator;
 
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASException;
+import org.apache.uima.cas.FSIndex;
+import org.apache.uima.cas.FSIterator;
+import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.collection.CasConsumer_ImplBase;
 import org.apache.uima.collection.base_cpm.CasObjectProcessor;
 import org.apache.uima.examples.SourceDocumentInformation;
@@ -34,6 +37,7 @@ import org.apache.uima.resource.ResourceConfigurationException;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceProcessException;
 import org.apache.uima.util.ProcessTrace;
+import org.apache.uima.util.XMLSerializer;
 
 /**
  * An example of CAS Consumer. <br>
@@ -89,19 +93,7 @@ public class CasConsumer extends CasConsumer_ImplBase implements CasObjectProces
     }
   }
 
-  /**
-   * Processes the CasContainer which was populated by the TextAnalysisEngines. <br>
-   * In this case, the CAS index is iterated over selected annotations and printed out into an
-   * output file
-   * 
-   * @param aCAS
-   *          CasContainer which has been populated by the TAEs
-   * 
-   * @throws ResourceProcessException
-   *           if there is an error in processing the Resource
-   * 
-   * @see org.apache.uima.collection.base_cpm.CasObjectProcessor#processCas(CAS)
-   */
+ 
   public synchronized void processCas(CAS aCAS) throws ResourceProcessException {
     JCas jcas;
     try {
@@ -109,44 +101,34 @@ public class CasConsumer extends CasConsumer_ImplBase implements CasObjectProces
     } catch (CASException e) {
       throw new ResourceProcessException(e);
     }
-
-    boolean titleP = false;
-    String docUri = null;
-    Iterator it = jcas.getAnnotationIndex(SourceDocumentInformation.type).iterator();
-    if (it.hasNext()) {
-      SourceDocumentInformation srcDocInfo = (SourceDocumentInformation) it.next();
-      docUri = srcDocInfo.getUri();
-    }
-
-    // iterate and print annotations
-    Iterator annotationIter = jcas.getAnnotationIndex().iterator();
-    while (annotationIter.hasNext()) {
-      Annotation annot = (Annotation) annotationIter.next();
-      if (titleP == false) {
-        try {
-          fileWriter.write("\n\n<++++NEW DOCUMENT :-/ ++++>\n");
-          if (docUri != null)
-            fileWriter.write("DOCUMENT URI:" + docUri + "\n");
-          fileWriter.write("\n");
-        } catch (IOException e) {
-          throw new ResourceProcessException(e);
-        }
-        titleP = true;
-      }
-      // get the text that is enclosed within the annotation in the CAS
-      String aText = annot.getCoveredText();
-      //aText = aText.replace('\n', ' ');
-      //aText = aText.replace('\r', ' ');
-      System.out.println("The text is: ");
-      System.out.println(aText);
-      // System.out.println( annot.getType().getName() + " "+aText);
+    
+    /*Code added try to iterate over annotations
+     *Retrieve the built index, iterate over the annotations
+     *Generate the output in the required form */
+	FSIndex anIndex = jcas.getAnnotationIndex(Sentence.type);
+	FSIterator anIter = anIndex.iterator();
+    while (anIter.isValid()) {
+      Sentence annot = (Sentence) anIter.get();
       try {
-    	  //fileWriter.write(aText);  
-    	  fileWriter.write(annot.getType().getName() + " " + aText + "\n");
-    	  fileWriter.flush();
-      } catch (IOException e) {
-        throw new ResourceProcessException(e);
-      }
+    	  
+    	//Code snippet to find number of spaces in the obtained gene
+    	int cnt=1;
+    	String geneName=annot.getGeneName();
+    	for(int i=0;i<geneName.length();i++)
+    	{
+    		if(geneName.charAt(i)==' ')
+    			cnt=cnt+1;
+    	}
+    	//Retrieve features and display them in the required format
+		fileWriter.write(annot.getSentenceID() + "|" + 
+						 annot.getGeneLoc() + ""  +
+						 " " +(Integer.parseInt(annot.getGeneLoc()) + annot.getGeneName().length()-cnt) + "|" +
+						 annot.getGeneName() + "\n");
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      anIter.moveToNext();
     }
   }
 
