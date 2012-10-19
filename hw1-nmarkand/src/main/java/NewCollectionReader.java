@@ -16,14 +16,14 @@ import org.apache.uima.util.Progress;
 import org.apache.uima.util.ProgressImpl;
 
 /**
- * A simple collection reader that reads documents from a directory in the filesystem. It can be
+ * The collection reader that reads a file from an input directory in the filesystem. It can be
  * configured with the following parameters:
  * <ul>
  * <li><code>InputDirectory</code> - path to directory containing files</li>
  * <li><code>Encoding</code> (optional) - character encoding of the input files</li>
  * <li><code>Language</code> (optional) - language of the input documents</li>
  * </ul>
- * 
+ * The lines extracted from the documents are added to the CAS
  * 
  */
 public class NewCollectionReader extends CollectionReader_ImplBase {
@@ -70,7 +70,6 @@ public class NewCollectionReader extends CollectionReader_ImplBase {
     //File directory = new File(((String) getConfigParameterValue(PARAM_INPUTFILE)).trim());
 	System.out.println(getConfigParameterValue(PARAM_INPUTFILE));
 	File directory = new File(((String) getConfigParameterValue(PARAM_INPUTFILE)).trim());
-	System.out.println("aaa");
     mEncoding  = (String) getConfigParameterValue(PARAM_ENCODING);
     mLanguage  = (String) getConfigParameterValue(PARAM_LANGUAGE);
     mRecursive = (Boolean) getConfigParameterValue(PARAM_SUBDIR);

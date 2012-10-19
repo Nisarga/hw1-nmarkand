@@ -8,7 +8,9 @@ import com.aliasi.util.AbstractExternalizable;
 import java.io.File;
 import java.io.IOException;
 
-
+/*Sentence gene annotator
+ * Extracts sentence
+ * Finds the gene name, location and adds it to the typesystem annotation*/
 @SuppressWarnings("deprecation")
 public class SentenceAnnotator extends JTextAnnotator_ImplBase {
 	
@@ -48,7 +50,7 @@ public class SentenceAnnotator extends JTextAnnotator_ImplBase {
 			tags=tags.replaceAll("[\\[\\],]","");
 			if(tags.length()>0)
 			{
-				String []locsTags=tags.split(",");
+				String []locsTags=tags.split(" ");
 				for(int j=0;j<locsTags.length;j++)
 				{
 					String thisLoc=locsTags[j].split(":")[0];
@@ -62,8 +64,6 @@ public class SentenceAnnotator extends JTextAnnotator_ImplBase {
 					annotation.setGeneName(lines[i].substring(startLoc,endLoc).trim());
 					annotation.setSentenceID(sentenceId);
 					annotation.setSentenceString(lines[i]);
-					//annotation.setGeneLoc(locs[0].trim());
-					//System.out.println(curLine[i]);
 					//Part where we find the number of spaces between start of string and locs[0]
 					int begin=Integer.parseInt(locs[0].trim());
 					String lineUnderCons=curLine[1];

@@ -40,18 +40,12 @@ import org.apache.uima.util.ProcessTrace;
 import org.apache.uima.util.XMLSerializer;
 
 /**
- * An example of CAS Consumer. <br>
- * AnnotationPrinter prints to an output file all annotations in the CAS. <br>
- * Parameters needed by the AnnotationPrinter are
+ * Implementation of the CAS Consumer <br>
+ * CasConsumer prints to an output file all annotations in the CAS. <br>
+ * Parameters needed by the CasConsumer are
  * <ol>
  * <li> "outputFile" : file to which the output files should be written.</li>
  * </ol>
- * <br>
- * These parameters are set in the initialize method to the values specified in the descriptor file.
- * <br>
- * These may also be set by the application by using the setConfigParameterValue methods.
- * 
- * 
  */
 
 public class CasConsumer extends CasConsumer_ImplBase implements CasObjectProcessor {
