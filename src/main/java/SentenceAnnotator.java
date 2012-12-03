@@ -21,7 +21,10 @@ public class SentenceAnnotator extends JTextAnnotator_ImplBase {
 		String[] lines=docText.split("\n");
 		
 		//Add LingPipe annotation
-		File modelFile = new File("src/main/resources/ne-en-bio-genetag.HmmChunker");
+		//Line commented for release
+		//File modelFile = new File("src/main/resources/ne-en-bio-genetag.HmmChunker");
+		
+		File modelFile=new File("ne-en-bio-genetag.HmmChunker");
 		System.out.println("Reading chunker from file=" + modelFile);
 	    Chunker chunker = null;
 		try {
