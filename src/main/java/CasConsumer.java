@@ -114,6 +114,8 @@ public class CasConsumer extends CasConsumer_ImplBase implements CasObjectProces
     			cnt=cnt+1;
     	}
     	//Retrieve features and display them in the required format
+    	//System.out.println("writing");
+    	//System.out.println((String) getUimaContext().getConfigParameterValue("outputFile"));
 		fileWriter.write(annot.getSentenceID() + "|" + 
 						 annot.getGeneLoc() + ""  +
 						 " " +(Integer.parseInt(annot.getGeneLoc()) + annot.getGeneName().length()-cnt) + "|" +
